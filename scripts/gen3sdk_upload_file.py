@@ -8,11 +8,12 @@ import requests
 from gen3.auth import Gen3Auth
 from gen3.file import Gen3File
 from gen3.index import Gen3Index
-
+from urllib.parse import urlparse
 # ---------- CONFIG ----------
 COMMONS = "https://omix3.test.biocommons.org.au"
-CREDENTIALS = "/Users/nalava/Downloads/cred.json"
+CREDENTIALS = "/Users/nalava/Downloads/cred5.json"
 AUTHZ = ["/programs/program1/projects/synthetic_dataset_1"]  # project write access
+#AUTHZ = ["/programs/program1/projects/synthetic_dataset_2"]  # project write access
 # ----------------------------
 
 def compute_hashes(filepath):
@@ -138,7 +139,18 @@ def main():
         print(f"❌ Failed to update hashes/size: {e}")
 
     # Step 7: Update other metadata if needed
-    bucket_url = presigned_url.split("?")[0]
+    parsed_url = urlparse(presigned_url)
+    # presigned_url format: https://endpoint/bucket/key?params
+    path_parts = parsed_url.path.lstrip('/').split('/', 1)
+    
+    if len(path_parts) >= 2:
+        bucket = path_parts[0]
+        key = path_parts[1]
+    
+    bucket_url = f"s3://{bucket}/{key}"
+    print(f"Debug - S3 URL: {bucket_url}")
+
+    print(f"Debug - S3 URL: {bucket_url}")
     urls_metadata = {bucket_url: {}}
     record = index.update_record(
         guid=guid,
