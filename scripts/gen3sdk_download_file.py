@@ -12,7 +12,7 @@ from gen3.index import Gen3Index
 
 # ---------- CONFIG ----------
 COMMONS = "https://omix3.test.biocommons.org.au"
-CREDENTIALS = "/Users/nalava/Downloads/cred5.json"
+CREDENTIALS = "/path/to/the/cred.json"
 # ----------------------------
 
 def download_file_by_guid(guid, output_dir="./downloads"):

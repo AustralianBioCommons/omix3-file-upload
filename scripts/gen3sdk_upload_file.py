@@ -11,9 +11,8 @@ from gen3.index import Gen3Index
 from urllib.parse import urlparse
 # ---------- CONFIG ----------
 COMMONS = "https://omix3.test.biocommons.org.au"
-CREDENTIALS = "/Users/nalava/Downloads/cred5.json"
+CREDENTIALS = "/path/to/the/cred.json"
 AUTHZ = ["/programs/program1/projects/synthetic_dataset_1"]  # project write access
-#AUTHZ = ["/programs/program1/projects/synthetic_dataset_2"]  # project write access
 # ----------------------------
 
 def compute_hashes(filepath):
