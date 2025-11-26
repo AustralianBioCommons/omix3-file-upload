@@ -74,7 +74,7 @@ Usage:
   python gen3sdk_download_file.py guid1 guid2 guid3 ./my_downloads/
 ```
 
-### Step2: File Downloading
+### Step3: Find File
 ```bash
 Usage:
   python gen3sdk_find_record.py <DID>
