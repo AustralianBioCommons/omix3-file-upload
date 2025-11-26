@@ -73,3 +73,13 @@ Usage:
   python gen3sdk_download_file.py 0479c9c6-89bc-4717-8952-763ccb555eba
   python gen3sdk_download_file.py guid1 guid2 guid3 ./my_downloads/
 ```
+
+### Step2: File Downloading
+```bash
+Usage:
+  python gen3sdk_find_record.py <DID>
+```
+#### Examples:
+```bash
+  python gen3_find_record.py PREFIX/58e1f28d-8a77-409d-8ac8-7c5cb6ffc853
+```
