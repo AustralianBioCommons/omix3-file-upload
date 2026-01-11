@@ -9,7 +9,7 @@ from gen3.auth import Gen3Auth
 
 # Configuration
 BASE_URL = "https://omix3.test.biocommons.org.au"
-CREDENTIALS_FILE = "/Users/nalava/Downloads/credentials2.json"
+CREDENTIALS_FILE = "/path/to/the/credentials.json"
 
 def get_auth_token():
     """Get authentication token using Gen3Auth"""
