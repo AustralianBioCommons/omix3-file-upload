@@ -83,3 +83,68 @@ Usage:
 ```bash
   python gen3_find_record.py PREFIX/58e1f28d-8a77-409d-8ac8-7c5cb6ffc853
 ```
+-------------------
+
+## Project Admin Utilities
+
+This repository includes utility scripts for updating project metadata values in the Gen3 Data Commons and synchronizing Discovery UI configuration. These scripts are intended for administrators with Gen3 credentials.
+
+### 1. Update availability
+#### Purpose
+update_availability.py updates the availability_type property of a Gen3 project (e.g., Open, Restricted) via the Gen3 Submission GraphQL interface.
+This is useful when changing dataset access levels after ingesting data or after policy decisions.
+#### Example Usage
+```bash
+python update_availability.py \
+  -p program1 \
+  -j synthetic_dataset_3 \
+  -a Restricted \
+  -c ~/path/to/the/credentials.json
+```
+#### Expected Output
+The script fetches current metadata, applies the new value, and then prints the updated project information.
+
+### 2. Sync to Discovery
+#### Purpose
+sync_explorer_to_discovery.py synchronizes metadata from the Explorer configuration and Elasticsearch index into the Discovery UI backend. This ensures that datasets updated via ETL or availability changes are reflected in the Discovery UI.
+Before running the sync script, update CREDENTIALS_FILE inside:
+```bash
+sync_explorer_to_discovery.py
+```
+#### Example:
+```bash
+CREDENTIALS_FILE = "/path/to/credentials.json"
+```
+Then run:
+```bash
+python sync_explorer_to_discovery.py
+```
+### 3. Services that must be restarted
+Changes to availability_type, project metadata, or Discovery data require a refresh of certain Gen3 components.
+Depending on deployment method (Helm, ArgoCD, docker-compose), restart:
+```bash
+sheepdog
+peregrine
+etl
+guppy
+frontend
+```
+### 4. Verifying Updates in the UI
+After restarts, changes will be visible in:
+#### ✔ Discovery UI
+Check for:
+updated availability_type badge (e.g., Restricted / Open)
+updated dataset metadata
+updated project card visibility
+#### ✔ GraphQL (Peregrine)
+Query project or program to confirm the metadata:
+
+#### Example:
+```bash
+query {
+  project(accessibility: accessible){
+    name
+    availability_type
+  }
+}
+```
